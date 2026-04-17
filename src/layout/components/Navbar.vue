@@ -1,58 +1,41 @@
 <template>
-  <div class="navbar" :class="'nav' + settingsStore.navType">
-    <hamburger id="hamburger-container" :is-active="appStore.sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-    <breadcrumb v-if="settingsStore.navType == 1" id="breadcrumb-container" class="breadcrumb-container" />
-    <top-nav v-if="settingsStore.navType == 2" id="topmenu-container" class="topmenu-container" />
-    <template v-if="settingsStore.navType == 3">
-      <logo v-show="settingsStore.sidebarLogo" :collapse="false"></logo>
-      <top-bar id="topbar-container" class="topbar-container" />
-    </template>
+  <div class="navbar myems-navbar">
+    <div class="navbar-left">
+      <hamburger id="hamburger-container" :is-active="appStore.sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+      <div class="title-group">
+        <div class="system-name">MyEMS 太阳能</div>
+        <div class="page-title">{{ pageTitle }}</div>
+      </div>
+    </div>
 
     <div class="right-menu">
-      <template v-if="appStore.device !== 'mobile'">
-        <header-search id="header-search" class="right-menu-item" />
-
-        <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />
-        </el-tooltip>
-
-        <el-tooltip content="文档地址" effect="dark" placement="bottom">
-          <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
-        </el-tooltip>
-
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
-
-        <el-tooltip content="主题模式" effect="dark" placement="bottom">
-          <div class="right-menu-item hover-effect theme-switch-wrapper" @click="toggleTheme">
-            <svg-icon v-if="settingsStore.isDark" icon-class="sunny" />
-            <svg-icon v-if="!settingsStore.isDark" icon-class="moon" />
-          </div>
-        </el-tooltip>
-
-        <el-tooltip content="布局大小" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>
-
-        <el-tooltip content="消息通知" effect="dark" placement="bottom">
-          <header-notice id="header-notice" class="right-menu-item hover-effect" />
-        </el-tooltip>
-      </template>
-
-      <el-dropdown @command="handleCommand" class="avatar-container right-menu-item hover-effect" trigger="hover">
+      <div class="status-pill">
+        <span class="status-dot" :class="{ offline: !isOnline }"></span>
+        <span>{{ isOnline ? '系统在线' : '网络离线' }}</span>
+      </div>
+      <div class="clock-pill">{{ nowText }}</div>
+      <el-tooltip content="主题切换" effect="dark" placement="bottom">
+        <button class="icon-button" type="button" @click="toggleTheme">
+          <svg-icon v-if="settingsStore.isDark" icon-class="sunny" />
+          <svg-icon v-else icon-class="moon" />
+        </button>
+      </el-tooltip>
+      <el-dropdown @command="handleCommand" class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img :src="userStore.avatar" class="user-avatar" />
-          <span class="user-nickname"> {{ userStore.nickName }} </span>
+          <div class="user-meta">
+            <span class="user-nickname">{{ displayName }}</span>
+            <span class="user-role">{{ userStore.name }}</span>
+          </div>
+          <el-icon><ArrowDown /></el-icon>
         </div>
         <template #dropdown>
           <el-dropdown-menu>
             <router-link to="/user/profile">
               <el-dropdown-item>个人中心</el-dropdown-item>
             </router-link>
-            <el-dropdown-item command="setLayout" v-if="settingsStore.showSettings">
-                <span>布局设置</span>
-            </el-dropdown-item>
             <el-dropdown-item command="lockScreen">
-                <span>锁定屏幕</span>
+              <span>锁定屏幕</span>
             </el-dropdown-item>
             <el-dropdown-item divided command="logout">
               <span>退出登录</span>
@@ -66,21 +49,12 @@
 
 <script setup>
 import { ElMessageBox } from 'element-plus'
-import Breadcrumb from '@/components/Breadcrumb'
-import TopNav from './TopNav'
-import TopBar from './TopBar'
-import Logo from './Sidebar/Logo'
+import { ArrowDown } from '@element-plus/icons-vue'
 import Hamburger from '@/components/Hamburger'
-import Screenfull from '@/components/Screenfull'
-import SizeSelect from '@/components/SizeSelect'
-import HeaderSearch from '@/components/HeaderSearch'
-import RuoYiGit from '@/components/RuoYi/Git'
-import RuoYiDoc from '@/components/RuoYi/Doc'
 import useAppStore from '@/store/modules/app'
 import useUserStore from '@/store/modules/user'
 import useLockStore from '@/store/modules/lock'
 import useSettingsStore from '@/store/modules/settings'
-import HeaderNotice from './HeaderNotice'
 
 const route = useRoute()
 const router = useRouter()
@@ -88,6 +62,8 @@ const appStore = useAppStore()
 const userStore = useUserStore()
 const lockStore = useLockStore()
 const settingsStore = useSettingsStore()
+const isOnline = ref(navigator.onLine)
+const nowText = ref('')
 
 function toggleSideBar() {
   appStore.toggleSideBar()
@@ -95,9 +71,6 @@ function toggleSideBar() {
 
 function handleCommand(command) {
   switch (command) {
-    case "setLayout":
-      setLayout()
-      break
     case "lockScreen":
       lockScreen()
       break
@@ -116,20 +89,49 @@ function logout() {
     type: 'warning'
   }).then(() => {
     userStore.logOut().then(() => {
-      location.href = '/index'
+      location.href = '/login'
     })
   }).catch(() => { })
-}
-
-const emits = defineEmits(['setLayout'])
-function setLayout() {
-  emits('setLayout')
 }
 
 function lockScreen() {
   const currentPath = route.fullPath
   lockStore.lockScreen(currentPath)
   router.push('/lock')
+}
+
+const displayName = computed(() => userStore.nickName || userStore.name || '用户')
+const pageTitle = computed(() => {
+  const matched = route.matched.filter(item => item.meta && item.meta.title)
+  return matched.length ? matched[matched.length - 1].meta.title : '监控大屏'
+})
+
+function setClock() {
+  const now = new Date()
+  const date = now.toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' })
+  const time = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+  nowText.value = `${date} ${time}`
+}
+
+let timer = null
+
+onMounted(() => {
+  setClock()
+  timer = window.setInterval(setClock, 60 * 1000)
+  window.addEventListener('online', handleNetworkChange)
+  window.addEventListener('offline', handleNetworkChange)
+})
+
+onBeforeUnmount(() => {
+  if (timer) {
+    window.clearInterval(timer)
+  }
+  window.removeEventListener('online', handleNetworkChange)
+  window.removeEventListener('offline', handleNetworkChange)
+})
+
+function handleNetworkChange() {
+  isOnline.value = navigator.onLine
 }
 
 async function toggleTheme(event) {
@@ -174,132 +176,171 @@ async function toggleTheme(event) {
 </script>
 
 <style lang='scss' scoped>
-.navbar.nav3 {
-  .hamburger-container {
-    display: none !important;
-  }
-}
-
 .navbar {
-  height: 50px;
-  overflow: hidden;
+  height: 72px;
+  padding: 0 18px 0 10px;
   position: relative;
-  background: var(--navbar-bg);
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  background: rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid var(--pv-border);
+  backdrop-filter: blur(18px);
   display: flex;
   align-items: center;
-  // padding: 0 8px;
   box-sizing: border-box;
+  justify-content: space-between;
+
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
 
   .hamburger-container {
-    line-height: 46px;
-    height: 100%;
-    cursor: pointer;
-    transition: background 0.3s;
-    -webkit-tap-highlight-color: transparent;
     display: flex;
     align-items: center;
-    flex-shrink: 0;
-    margin-right: 8px;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.025);
-    }
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: var(--pv-surface-soft);
+    border: 1px solid var(--pv-border);
   }
 
-  .breadcrumb-container {
-    flex-shrink: 0;
-  }
-
-  .topmenu-container {
-    position: absolute;
-    left: 50px;
-  }
-
-  .topbar-container {
-    flex: 1;
+  .title-group {
     min-width: 0;
-    display: flex;
-    align-items: center;
+  }
+
+  .system-name {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--pv-text-muted);
+  }
+
+  .page-title {
+    margin-top: 6px;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 700;
+    color: var(--pv-text);
+    white-space: nowrap;
     overflow: hidden;
-    margin-left: 8px;
+    text-overflow: ellipsis;
   }
 
   .right-menu {
-    height: 100%;
-    line-height: 50px;
     display: flex;
     align-items: center;
-    margin-left: auto;
+    gap: 12px;
 
     &:focus {
       outline: none;
     }
 
-    .right-menu-item {
-      display: inline-block;
-      padding: 0 8px;
-      height: 100%;
-      font-size: 18px;
-      color: #5a5e66;
-      vertical-align: text-bottom;
+    .status-pill,
+    .clock-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      height: 42px;
+      padding: 0 14px;
+      border-radius: 14px;
+      background: var(--pv-surface-soft);
+      border: 1px solid var(--pv-border);
+      color: var(--pv-text-soft);
+      font-size: 13px;
+    }
 
-      &.hover-effect {
-        cursor: pointer;
-        transition: background 0.3s;
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--pv-success);
+      box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.14);
 
-        &:hover {
-          background: rgba(0, 0, 0, 0.025);
-        }
-      }
-
-      &.theme-switch-wrapper {
-        display: flex;
-        align-items: center;
-
-        svg {
-          transition: transform 0.3s;
-          
-          &:hover {
-            transform: scale(1.15);
-          }
-        }
+      &.offline {
+        background: var(--pv-danger);
+        box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.16);
       }
     }
 
+    .icon-button {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--pv-border);
+      background: var(--pv-surface-soft);
+      color: var(--pv-text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
     .avatar-container {
-      margin-right: 0px;
-      padding-right: 0px;
+      height: 42px;
+    }
 
-      .avatar-wrapper {
-        margin-top: 10px;
-        right: 8px;
-        position: relative;
+    .avatar-wrapper {
+      height: 42px;
+      padding: 0 12px 0 8px;
+      border-radius: 16px;
+      border: 1px solid var(--pv-border);
+      background: var(--pv-surface-strong);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--pv-text);
+      cursor: pointer;
+    }
 
-        .user-avatar {
-          cursor: pointer;
-          width: 30px;
-          height: 30px;
-          margin-right: 8px;
-          border-radius: 50%;
-        }
+    .user-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
 
-        .user-nickname{
-          position: relative;
-          left: 0px;
-          bottom: 10px;
-          font-size: 14px;
-          font-weight: bold;
-        }
+    .user-meta {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
 
-        i {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
-        }
-      }
+    .user-nickname {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .user-role {
+      margin-top: 3px;
+      font-size: 11px;
+      color: var(--pv-text-muted);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    height: 64px;
+    padding-right: 12px;
+
+    .page-title {
+      font-size: 18px;
+    }
+
+    .system-name,
+    .clock-pill,
+    .status-pill .status-dot,
+    .user-role {
+      display: none;
+    }
+
+    .status-pill {
+      padding: 0 10px;
+    }
+
+    .user-meta {
+      display: none;
     }
   }
 }

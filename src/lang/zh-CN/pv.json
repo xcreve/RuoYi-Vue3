@@ -1,0 +1,370 @@
+{
+  "common": {
+    "buttons": {
+      "reset": "重置",
+      "save": "保存",
+      "cancel": "取消",
+      "edit": "编辑",
+      "delete": "删除",
+      "detail": "详情",
+      "markResolved": "标记已处理",
+      "resolveAll": "一键处理",
+      "exportExcel": "导出 Excel"
+    },
+    "table": {
+      "actions": "操作",
+      "status": "状态",
+      "createTime": "创建时间",
+      "lastSeen": "最后在线",
+      "level": "级别",
+      "content": "告警内容",
+      "source": "来源",
+      "occurTime": "发生时间"
+    },
+    "status": {
+      "online": "在线",
+      "offline": "离线",
+      "fault": "故障",
+      "active": "未处理",
+      "resolved": "已处理"
+    },
+    "level": {
+      "critical": "严重",
+      "warning": "警告",
+      "info": "提示"
+    },
+    "states": {
+      "readOnly": "只读",
+      "pending": "待处理"
+    },
+    "messages": {
+      "createSuccess": "新增成功",
+      "updateSuccess": "修改成功",
+      "deleteSuccess": "删除成功"
+    }
+  },
+  "dashboard": {
+    "title": "监控大屏",
+    "subtitle": {
+      "connected": "WebSocket 实时推送优先，当前已连接。",
+      "fallback": "WebSocket 实时推送优先，断线后回退 60 秒轮询。"
+    },
+    "metrics": {
+      "currentPower": {
+        "label": "实时功率",
+        "desc": "按全部逆变器当前功率汇总"
+      },
+      "dailyYield": {
+        "label": "当日发电量",
+        "desc": "按最新日发电量累计"
+      },
+      "onlineInverters": {
+        "label": "在线逆变器",
+        "desc": "状态来自最近一次轮询或模拟"
+      },
+      "totalCapacity": {
+        "label": "总装机容量",
+        "desc": "电站容量关系化汇总"
+      }
+    },
+    "sections": {
+      "powerTrend": {
+        "title": "最近 24 小时功率曲线",
+        "tip": "横轴按小时聚合，来源于 `pv_telemetry`。"
+      },
+      "distribution": {
+        "title": "功率分布",
+        "tip": "用于快速观察白天曲线峰值分布。"
+      },
+      "activeAlerts": {
+        "title": "最近活动告警",
+        "tip": "显示最新 6 条未处理告警。"
+      }
+    },
+    "chip": {
+      "activeAlerts": "当前活动告警 {count}"
+    },
+    "buttons": {
+      "simulate": "触发模拟数据"
+    },
+    "empty": {
+      "alerts": "暂无活动告警"
+    },
+    "messages": {
+      "simulateSuccess": "模拟数据已写入",
+      "resolveConfirm": "确认处理告警“{content}”吗？",
+      "resolveSuccess": "告警已处理",
+      "resolveAllConfirm": "确认处理当前所有活动告警吗？",
+      "resolveAllSuccess": "全部活动告警已处理"
+    }
+  },
+  "alert": {
+    "title": "系统告警",
+    "subtitle": "支持按内容、来源、级别和状态筛选，并按 60 秒自动轮询。",
+    "query": {
+      "searchPlaceholder": "搜索告警内容或来源",
+      "levelPlaceholder": "告警级别",
+      "statusPlaceholder": "处理状态"
+    },
+    "columns": {
+      "processingInfo": "处理信息"
+    },
+    "messages": {
+      "resolveConfirm": "确认处理告警“{content}”吗？",
+      "resolveSuccess": "告警已处理",
+      "resolveAllConfirm": "确认处理当前查询结果中的全部活动告警吗？",
+      "resolveAllSuccess": "活动告警已批量处理"
+    }
+  },
+  "analysis": {
+    "title": "数据分析",
+    "subtitle": "按日期区间和电站标签聚合小时发电量，导出由后端 Excel 生成。",
+    "query": {
+      "searchStation": "搜索电站名称",
+      "allTags": "全部标签",
+      "rangeSeparator": "至",
+      "startDate": "开始日期",
+      "endDate": "结束日期",
+      "month": "本月",
+      "year": "本年"
+    },
+    "section": {
+      "title": "小时发电量统计",
+      "tip": "统计维度为站点 + 小时，单位 kWh。"
+    },
+    "currentRows": "当前行数 {count}",
+    "table": {
+      "stationName": "电站名称",
+      "tag": "标签",
+      "hour": "{hour}时",
+      "total": "总计"
+    },
+    "empty": {
+      "noData": "暂无可用统计数据"
+    }
+  },
+  "gateway": {
+    "title": "接入网关",
+    "subtitle": "通信配置已拆平为协议、通信地址、Topic/寄存器映射和轮询间隔；轮询网关支持填写 ModbusTCP 采集参数。",
+    "query": {
+      "gatewayName": "搜索网关名称",
+      "serialNumber": "搜索序列号",
+      "station": "所属电站"
+    },
+    "buttons": {
+      "add": "新增网关"
+    },
+    "table": {
+      "gatewayName": "网关名称",
+      "type": "类型",
+      "station": "所属电站",
+      "serialNumber": "序列号",
+      "communicationType": "通讯方式",
+      "protocol": "协议"
+    },
+    "dialog": {
+      "addTitle": "新增网关",
+      "editTitle": "编辑网关"
+    },
+    "drawer": {
+      "title": "网关详情"
+    },
+    "form": {
+      "gatewayName": "网关名称",
+      "gatewayType": "网关类型",
+      "station": "所属电站",
+      "serialNumber": "序列号",
+      "communicationType": "通讯方式",
+      "protocol": "采集协议",
+      "brokerUrl": "Broker URL",
+      "collectAddress": "采集地址",
+      "topic": "Topic",
+      "registerMapping": "寄存器映射",
+      "pollingInterval": "轮询间隔",
+      "gatewayNamePlaceholder": "请输入网关名称",
+      "gatewayTypePlaceholder": "请选择网关类型",
+      "stationPlaceholder": "请选择电站",
+      "serialNumberPlaceholder": "请输入网关序列号",
+      "communicationTypePlaceholder": "请选择通讯方式",
+      "protocolPlaceholder": "请选择协议",
+      "brokerUrlPlaceholder": "MQTT Broker 地址",
+      "collectAddressPlaceholder": "tcp://127.0.0.1:502?unitId=1&unitStep=1",
+      "topicPlaceholder": "MQTT Topic",
+      "registerMappingPlaceholder": "power=0:2:0.1;dailyYield=2:2:0.1;totalYield=4:2:0.1;voltage=6:1:0.1;current=7:1:0.01"
+    },
+    "detail": {
+      "gatewayName": "网关名称",
+      "station": "所属电站",
+      "serialNumber": "序列号",
+      "communicationType": "通讯方式",
+      "protocol": "采集协议",
+      "address": "通信地址",
+      "mapping": "Topic / 寄存器映射"
+    },
+    "validation": {
+      "gatewayName": "请输入网关名称",
+      "gatewayType": "请选择网关类型",
+      "station": "请选择所属电站",
+      "serialNumber": "请输入网关序列号",
+      "communicationType": "请选择通讯方式"
+    },
+    "messages": {
+      "deleteConfirm": "确认删除网关“{name}”吗？"
+    }
+  },
+  "inverter": {
+    "title": "接入设备",
+    "subtitle": "逆变器关联网关和型号，页面按 60 秒轮询最新在线状态、功率和发电量。",
+    "query": {
+      "serialNumber": "搜索序列号",
+      "inverterNumber": "搜索设备编号",
+      "gateway": "所属网关"
+    },
+    "buttons": {
+      "add": "新增设备"
+    },
+    "table": {
+      "number": "编号",
+      "serialNumber": "序列号",
+      "brandModel": "品牌型号",
+      "gateway": "所属网关",
+      "currentPower": "当前功率(kW)",
+      "dailyYield": "当日发电量(kWh)"
+    },
+    "dialog": {
+      "addTitle": "新增逆变器",
+      "editTitle": "编辑逆变器"
+    },
+    "drawer": {
+      "title": "逆变器详情"
+    },
+    "form": {
+      "gateway": "所属网关",
+      "model": "品牌型号",
+      "inverterNumber": "设备编号",
+      "serialNumber": "序列号",
+      "gatewayPlaceholder": "请选择网关",
+      "modelPlaceholder": "请选择型号",
+      "inverterNumberPlaceholder": "请输入设备编号",
+      "serialNumberPlaceholder": "请输入设备序列号"
+    },
+    "detail": {
+      "inverterNumber": "设备编号",
+      "serialNumber": "序列号",
+      "brand": "品牌",
+      "model": "型号",
+      "gateway": "所属网关",
+      "currentPower": "当前功率",
+      "dailyYield": "当日发电量"
+    },
+    "validation": {
+      "gateway": "请选择所属网关",
+      "model": "请选择品牌型号",
+      "serialNumber": "请输入设备序列号"
+    },
+    "messages": {
+      "deleteConfirm": "确认删除设备“{serialNumber}”吗？"
+    }
+  },
+  "model": {
+    "title": "品牌型号",
+    "subtitle": "统一维护逆变器品牌、型号和 MQTT 协议说明。",
+    "query": {
+      "brand": "搜索品牌",
+      "modelName": "搜索型号"
+    },
+    "buttons": {
+      "add": "新增型号"
+    },
+    "table": {
+      "brand": "品牌",
+      "modelName": "型号",
+      "mqttProtocol": "MQTT 协议说明"
+    },
+    "dialog": {
+      "addTitle": "新增型号",
+      "editTitle": "编辑型号"
+    },
+    "form": {
+      "brand": "品牌",
+      "modelName": "型号",
+      "mqttProtocol": "MQTT 协议",
+      "brandPlaceholder": "请输入品牌",
+      "modelNamePlaceholder": "请输入型号",
+      "mqttProtocolPlaceholder": "请输入 MQTT 协议说明"
+    },
+    "validation": {
+      "brand": "请输入品牌",
+      "modelName": "请输入型号"
+    },
+    "messages": {
+      "deleteConfirm": "确认删除型号“{name}”吗？"
+    }
+  },
+  "station": {
+    "title": "电站管理",
+    "subtitle": "电站与单个标签建立关系，删除时由后端校验是否存在接入网关。",
+    "query": {
+      "stationName": "搜索电站名称",
+      "allTags": "全部标签"
+    },
+    "buttons": {
+      "add": "新增电站"
+    },
+    "table": {
+      "stationName": "电站名称",
+      "location": "地理位置",
+      "tag": "标签",
+      "capacity": "装机容量(MW)"
+    },
+    "dialog": {
+      "addTitle": "新增电站",
+      "editTitle": "编辑电站"
+    },
+    "form": {
+      "stationName": "电站名称",
+      "location": "地理位置",
+      "tag": "电站标签",
+      "capacity": "装机容量",
+      "stationNamePlaceholder": "请输入电站名称",
+      "locationPlaceholder": "请输入地理位置",
+      "tagPlaceholder": "请选择标签"
+    },
+    "validation": {
+      "stationName": "请输入电站名称"
+    },
+    "messages": {
+      "deleteConfirm": "确认删除电站“{name}”吗？"
+    }
+  },
+  "stationTag": {
+    "title": "电站标签",
+    "subtitle": "维护电站标签，用于站点归类与数据分析筛选。",
+    "query": {
+      "tagName": "搜索标签名称"
+    },
+    "buttons": {
+      "add": "新增标签"
+    },
+    "table": {
+      "tagName": "标签名称",
+      "description": "描述"
+    },
+    "dialog": {
+      "addTitle": "新增标签",
+      "editTitle": "编辑标签"
+    },
+    "form": {
+      "tagName": "标签名称",
+      "description": "标签描述",
+      "tagNamePlaceholder": "请输入标签名称",
+      "descriptionPlaceholder": "请输入标签说明"
+    },
+    "validation": {
+      "tagName": "请输入标签名称"
+    },
+    "messages": {
+      "deleteConfirm": "确认删除标签“{name}”吗？"
+    }
+  }
+}

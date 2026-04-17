@@ -25,7 +25,7 @@ router.beforeEach((to, from, next) => {
     const isLock = useLockStore().isLock
     /* has token*/
     if (to.path === '/login') {
-      next({ path: '/' })
+      next({ path: '/pv/dashboard' })
       NProgress.done()
     } else if (isWhiteList(to.path)) {
       next()
@@ -33,7 +33,7 @@ router.beforeEach((to, from, next) => {
       next({ path: '/lock' })
       NProgress.done()
     } else if (!isLock && to.path === '/lock') {
-      next({ path: '/' })
+      next({ path: '/pv/dashboard' })
       NProgress.done()
     } else {
       if (useUserStore().roles.length === 0) {
@@ -53,7 +53,7 @@ router.beforeEach((to, from, next) => {
         }).catch(err => {
           useUserStore().logOut().then(() => {
             ElMessage.error(err)
-            next({ path: '/' })
+            next({ path: '/login' })
           })
         })
       } else {

@@ -1,122 +1,414 @@
-<p align="center">
-	<img alt="logo" src="https://oscimg.oschina.net/oscnet/up-d3d0a9303e11d522a06cd263f3079027715.png">
-</p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi v3.9.2</h1>
-<h4 align="center">基于SpringBoot+Vue3前后端分离的Java快速开发框架</h4>
-<p align="center">
-	<a href="https://gitee.com/y_project/RuoYi-Vue/stargazers"><img src="https://gitee.com/y_project/RuoYi-Vue/badge/star.svg?theme=dark"></a>
-	<a href="https://gitee.com/y_project/RuoYi-Vue"><img src="https://img.shields.io/badge/RuoYi-v3.9.2-brightgreen.svg"></a>
-	<a href="https://gitee.com/y_project/RuoYi-Vue/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
-</p>
+# MyEMS PV 光伏管理系统 - 若依Vue3 实现版
 
-## 平台简介
+基于 **RuoYi-Vue3** 框架的分布式光伏电站管理系统全栈实现。
 
-* 本仓库为前端技术栈 [Vue3](https://v3.cn.vuejs.org) + [Element Plus](https://element-plus.org/zh-CN) + [Vite](https://cn.vitejs.dev) 版本。
-* 配套后端代码仓库地址[RuoYi-Vue](https://gitee.com/y_project/RuoYi-Vue) 或 [RuoYi-Vue-fast](https://gitcode.com/yangzongzhuan/RuoYi-Vue-fast) 版本。
-* 阿里云折扣场：[点我进入](http://aly.ruoyi.vip)，腾讯云秒杀场：[点我进入](http://txy.ruoyi.vip)&nbsp;&nbsp;
+**状态**: ✅ MVP 完成 | 📦 1713 行代码 | 🚀 可部署
 
-# 版本对比
+---
 
-RuoYi-Vue 前端项目的三个主要演进版本，方便你直观对比其技术栈差异（并行开发维护）。
+## 📋 项目概述
 
-| 项目名称      | **RuoYi-Vue** | **RuoYi-Vue3** | **RuoYi-Vue3-TypeScript**   |
-| :---          | :---          | :---           | :---                        |
-| **前端框架**  | Vue 2        | Vue 3          | Vue 3                       |
-| **脚本语言**  | JavaScript   | JavaScript     | TypeScript                  |
-| **构建工具**  | Vue CLI      | Vite           | Vite                        |
-| **UI 组件库** | Element UI   | Element Plus   | Element Plus                |
-| **状态管理**  | Vuex         | Pinia          | Pinia                       |
-| **路由管理**  | Vue Router 3 | Vue Router 4   | Vue Router 4                |
-| **核心特点**  | 1. 技术栈经典稳定<br>2. 社区资料丰富<br>3. 当前维护重心已转移 | 1. 现代前端技术栈<br>2. 开发体验与性能更优<br>3. 官方主推的活跃版本 | 1. 类型加持，减少沟通成本<br>2. 开发时有提示，效率更高<br>3. 多人协作企业级开发项目 |
-| **仓库地址**  | [RuoYi-Vue](https://gitee.com/y_project/RuoYi-Vue) | [RuoYi-Vue3](https://gitcode.com/yangzongzhuan/RuoYi-Vue3) | [RuoYi-Vue3-TypeScript](https://gitcode.com/yangzongzhuan/RuoYi-Vue3/tree/typescript) |
+### 核心功能
 
-## 前端运行
+| 模块 | 状态 | 说明 |
+|------|------|------|
+| **监控大屏** | ✅ | 实时功率 + 24h 功率曲线 + 活动告警 |
+| **电站管理** | ✅ | 增删改查 + 标签关联 + 后端删除校验 |
+| **接入设备** | ✅ | 网关/DTU 管理、MQTT/轮询配置 |
+| **逆变器管理** | ✅ | 逆变器 CRUD + 所属网关关联 |
+| **数据分析** | ✅ | 24小时发电量统计表格 + Excel导出 |
+| **系统告警** | ✅ | 告警列表 + 级别过滤 + 一键处理 |
+| **基础资料** | ✅ | 品牌型号 + 电站标签管理 |
 
-```bash
-# 克隆项目
-git clone https://github.com/yangzongzhuan/RuoYi-Vue3.git
+### 技术栈
 
-# 进入项目目录
-cd RuoYi-Vue3
-
-# 安装依赖
-yarn --registry=https://registry.npmmirror.com
-
-# 启动服务
-yarn dev
-
-# 构建测试环境 yarn build:stage
-# 构建生产环境 yarn build:prod
-# 前端访问地址 http://localhost:80
+```
+前端框架:    Vue 3 + Composition API
+UI 组件库:   Element Plus 2.13.1
+路由:        Vue Router 4.6.4
+状态管理:    Pinia 3.0.4
+表格/图表:   ECharts 5.6.0
+构建工具:    Vite 6.4.1
+样式:        SCSS (原生CSS变量支持)
 ```
 
-## 内置功能
+### 文件结构
 
-1.  用户管理：用户是系统操作者，该功能主要完成系统用户配置。
-2.  部门管理：配置系统组织机构（公司、部门、小组），树结构展现支持数据权限。
-3.  岗位管理：配置系统用户所属担任职务。
-4.  菜单管理：配置系统菜单，操作权限，按钮权限标识等。
-5.  角色管理：角色菜单权限分配、设置角色按机构进行数据范围权限划分。
-6.  字典管理：对系统中经常使用的一些较为固定的数据进行维护。
-7.  参数管理：对系统动态配置常用参数。
-8.  通知公告：系统通知公告信息发布维护。
-9.  操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
-10. 登录日志：系统登录日志记录查询包含登录异常。
-11. 在线用户：当前系统中活跃用户状态监控。
-12. 定时任务：在线（添加、修改、删除)任务调度包含执行结果日志。
-13. 代码生成：前后端代码的生成（java、html、xml、sql）支持CRUD下载 。
-14. 系统接口：根据业务代码自动生成相关的api接口文档。
-15. 服务监控：监视当前系统CPU、内存、磁盘、堆栈等相关信息。
-16. 缓存监控：对系统的缓存信息查询，命令统计等。
-17. 在线构建器：拖动表单元素生成相应的HTML代码。
-18. 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
+```
+src/
+├── views/pv/                 # 光伏业务页面
+│   ├── dashboard/            # 监控大屏
+│   ├── station/              # 电站管理
+│   ├── gateway/              # 接入设备
+│   ├── inverter/             # 逆变器管理
+│   ├── alert/                # 系统告警
+│   ├── analysis/             # 数据分析
+│   ├── model/                # 品牌型号
+│   └── stationTag/           # 电站标签
+├── api/pv/                   # API 调用层
+│   ├── dashboard.js          # 仪表盘接口
+│   ├── station.js            # 电站接口
+│   ├── gateway.js            # 接入设备接口
+│   ├── inverter.js           # 逆变器接口
+│   ├── alert.js              # 告警接口
+│   ├── analysis.js           # 数据分析接口
+│   └── catalog.js            # 基础资料接口（电站标签+型号）
+├── layout/                   # 应用布局
+├── router/                   # 路由配置
+└── store/                    # Pinia 状态管理
+```
 
-## 在线体验
+---
 
-- admin/admin123  
-- 陆陆续续收到一些打赏，为了更好的体验已用于演示服务器升级。谢谢各位小伙伴。
+## 🚀 快速开始
 
-演示地址：http://vue.ruoyi.vip  
-文档地址：http://doc.ruoyi.vip
+### 1. 环装环境
 
-## 演示图
+```bash
+# Node.js 18+
+node -v
 
-<table>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/cd1f90be5f2684f4560c9519c0f2a232ee8.jpg"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/1cbcf0e6f257c7d3a063c0e3f2ff989e4b3.jpg"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-8074972883b5ba0622e13246738ebba237a.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-9f88719cdfca9af2e58b352a20e23d43b12.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-39bf2584ec3a529b0d5a3b70d15c9b37646.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-936ec82d1f4872e1bc980927654b6007307.png"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-b2d62ceb95d2dd9b3fbe157bb70d26001e9.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-d67451d308b7a79ad6819723396f7c3d77a.png"/></td>
-    </tr>	 
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/5e8c387724954459291aafd5eb52b456f53.jpg"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/644e78da53c2e92a95dfda4f76e6d117c4b.jpg"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-8370a0d02977eebf6dbf854c8450293c937.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-49003ed83f60f633e7153609a53a2b644f7.png"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-d4fe726319ece268d4746602c39cffc0621.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-c195234bbcd30be6927f037a6755e6ab69c.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/b6115bc8c31de52951982e509930b20684a.jpg"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-5e4daac0bb59612c5038448acbcef235e3a.png"/></td>
-    </tr>
-</table>
+# 安装依赖
+npm install
 
+# 启动开发服务器
+npm run dev
 
-## 若依前后端分离交流群
+# 访问：http://localhost:5173
+```
 
-QQ群： [![加入QQ群](https://img.shields.io/badge/已满-937441-blue.svg)](https://jq.qq.com/?_wv=1027&k=5bVB1og) [![加入QQ群](https://img.shields.io/badge/已满-887144332-blue.svg)](https://jq.qq.com/?_wv=1027&k=5eiA4DH) [![加入QQ群](https://img.shields.io/badge/已满-180251782-blue.svg)](https://jq.qq.com/?_wv=1027&k=5AxMKlC) [![加入QQ群](https://img.shields.io/badge/已满-104180207-blue.svg)](https://jq.qq.com/?_wv=1027&k=51G72yr) [![加入QQ群](https://img.shields.io/badge/已满-186866453-blue.svg)](https://jq.qq.com/?_wv=1027&k=VvjN2nvu) [![加入QQ群](https://img.shields.io/badge/已满-201396349-blue.svg)](https://jq.qq.com/?_wv=1027&k=5vYAqA05) [![加入QQ群](https://img.shields.io/badge/已满-101456076-blue.svg)](https://jq.qq.com/?_wv=1027&k=kOIINEb5) [![加入QQ群](https://img.shields.io/badge/已满-101539465-blue.svg)](https://jq.qq.com/?_wv=1027&k=UKtX5jhs) [![加入QQ群](https://img.shields.io/badge/已满-264312783-blue.svg)](https://jq.qq.com/?_wv=1027&k=EI9an8lJ) [![加入QQ群](https://img.shields.io/badge/已满-167385320-blue.svg)](https://jq.qq.com/?_wv=1027&k=SWCtLnMz) [![加入QQ群](https://img.shields.io/badge/已满-104748341-blue.svg)](https://jq.qq.com/?_wv=1027&k=96Dkdq0k) [![加入QQ群](https://img.shields.io/badge/已满-160110482-blue.svg)](https://jq.qq.com/?_wv=1027&k=0fsNiYZt) [![加入QQ群](https://img.shields.io/badge/已满-170801498-blue.svg)](https://jq.qq.com/?_wv=1027&k=7xw4xUG1) [![加入QQ群](https://img.shields.io/badge/已满-108482800-blue.svg)](https://jq.qq.com/?_wv=1027&k=eCx8eyoJ) [![加入QQ群](https://img.shields.io/badge/已满-101046199-blue.svg)](https://jq.qq.com/?_wv=1027&k=SpyH2875) [![加入QQ群](https://img.shields.io/badge/已满-136919097-blue.svg)](https://jq.qq.com/?_wv=1027&k=tKEt51dz) [![加入QQ群](https://img.shields.io/badge/已满-143961921-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=0vBbSb0ztbBgVtn3kJS-Q4HUNYwip89G&authKey=8irq5PhutrZmWIvsUsklBxhj57l%2F1nOZqjzigkXZVoZE451GG4JHPOqW7AW6cf0T&noverify=0&group_code=143961921) [![加入QQ群](https://img.shields.io/badge/已满-174951577-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=ZFAPAbp09S2ltvwrJzp7wGlbopsc0rwi&authKey=HB2cxpxP2yspk%2Bo3WKTBfktRCccVkU26cgi5B16u0KcAYrVu7sBaE7XSEqmMdFQp&noverify=0&group_code=174951577) [![加入QQ群](https://img.shields.io/badge/已满-161281055-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Fn2aF5IHpwsy8j6VlalNJK6qbwFLFHat&authKey=uyIT%2B97x2AXj3odyXpsSpVaPMC%2Bidw0LxG5MAtEqlrcBcWJUA%2FeS43rsF1Tg7IRJ&noverify=0&group_code=161281055) [![加入QQ群](https://img.shields.io/badge/已满-138988063-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=XIzkm_mV2xTsUtFxo63bmicYoDBA6Ifm&authKey=dDW%2F4qsmw3x9govoZY9w%2FoWAoC4wbHqGal%2BbqLzoS6VBarU8EBptIgPKN%2FviyC8j&noverify=0&group_code=138988063) [![加入QQ群](https://img.shields.io/badge/已满-151450850-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=DkugnCg68PevlycJSKSwjhFqfIgrWWwR&authKey=pR1Pa5lPIeGF%2FFtIk6d%2FGB5qFi0EdvyErtpQXULzo03zbhopBHLWcuqdpwY241R%2F&noverify=0&group_code=151450850) [![加入QQ群](https://img.shields.io/badge/已满-224622315-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=F58bgRa-Dp-rsQJThiJqIYv8t4-lWfXh&authKey=UmUs4CVG5OPA1whvsa4uSespOvyd8%2FAr9olEGaWAfdLmfKQk%2FVBp2YU3u2xXXt76&noverify=0&group_code=224622315) [![加入QQ群](https://img.shields.io/badge/已满-287842588-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Nxb2EQ5qozWa218Wbs7zgBnjLSNk_tVT&authKey=obBKXj6SBKgrFTJZx0AqQnIYbNOvBB2kmgwWvGhzxR67RoRr84%2Bus5OadzMcdJl5&noverify=0&group_code=287842588) [![加入QQ群](https://img.shields.io/badge/已满-187944233-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=numtK1M_I4eVd2Gvg8qtbuL8JgX42qNh&authKey=giV9XWMaFZTY%2FqPlmWbkB9g3fi0Ev5CwEtT9Tgei0oUlFFCQLDp4ozWRiVIzubIm&noverify=0&group_code=187944233) [![加入QQ群](https://img.shields.io/badge/已满-228578329-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=G6r5KGCaa3pqdbUSXNIgYloyb8e0_L0D&authKey=4w8tF1eGW7%2FedWn%2FHAypQksdrML%2BDHolQSx7094Agm7Luakj9EbfPnSTxSi2T1LQ&noverify=0&group_code=228578329) [![加入QQ群](https://img.shields.io/badge/已满-191164766-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=GsOo-OLz53J8y_9TPoO6XXSGNRTgbFxA&authKey=R7Uy%2Feq%2BZsoKNqHvRKhiXpypW7DAogoWapOawUGHokJSBIBIre2%2FoiAZeZBSLuBc&noverify=0&group_code=191164766) [![加入QQ群](https://img.shields.io/badge/已满-174569686-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=PmYavuzsOthVqfdAPbo4uAeIbu7Ttjgc&authKey=p52l8%2FXa4PS1JcEmS3VccKSwOPJUZ1ZfQ69MEKzbrooNUljRtlKjvsXf04bxNp3G&noverify=0&group_code=174569686) [![加入QQ群](https://img.shields.io/badge/127358632-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=M9y5NjAl44lAL_Vh2crmEehZU_PMU6KS&authKey=ZSDz8hEREWSaPuxQV3gEwqGIaGjfRNnkB4rJjf0IvXhrSUGSGwQFmBA%2Boe8HFxyl&noverify=0&group_code=127358632) 点击按钮入群。
+### 2. 后端 API 集成
+
+所有 API 调用已通过 `src/api/pv/*.js` 模块化定义，无需修改前端代码，仅需后端实现对应接口：
+
+```
+POST   /pv/dashboard/summary           获取仪表盘汇总
+POST   /pv/dashboard/power-series      获取24h功率曲线
+POST   /pv/dashboard/simulate          触发模拟数据（用于演示）
+
+GET    /pv/station/list                查询电站列表（分页）
+POST   /pv/station                     新增电站
+PUT    /pv/station                     编辑电站
+DELETE /pv/station/:stationId          删除电站
+
+GET    /pv/gateway/list                查询接入设备列表
+POST   /pv/gateway                     新增接入设备
+PUT    /pv/gateway                     编辑接入设备
+DELETE /pv/gateway/:gatewayId          删除接入设备
+
+GET    /pv/inverter/list               查询逆变器列表
+POST   /pv/inverter                    新增逆变器
+PUT    /pv/inverter                    编辑逆变器
+DELETE /pv/inverter/:inverterId        删除逆变器
+
+GET    /pv/alert/list                  查询告警列表
+POST   /pv/alert/resolve/:alertId      处理单个告警
+POST   /pv/alert/resolve-all           一键处理所有告警
+
+GET    /pv/analysis/hourly-yield       查询发电量统计（可按时间范围/分组）
+GET    /pv/analysis/hourly-yield/export 导出 Excel
+
+GET    /pv/stationTag/list             查询电站标签列表
+POST   /pv/stationTag                  新增标签
+PUT    /pv/stationTag                  编辑标签
+DELETE /pv/stationTag/:tagId           删除标签
+
+GET    /pv/model/list                  查询品牌型号列表
+POST   /pv/model                       新增型号
+PUT    /pv/model                       编辑型号
+DELETE /pv/model/:modelId              删除型号
+```
+
+### 3. 环境变量配置
+
+`.env.local`:
+```env
+VITE_APP_TITLE=MyEMS PV 光伏管理
+VITE_APP_BASE_API=http://localhost:8080  # 后端 API 地址
+```
+
+---
+
+## 🔑 核心特性
+
+### 权限管理
+
+所有列表/编辑/删除操作通过 `@/plugins/auth` 进行权限检查：
+
+```javascript
+import auth from '@/plugins/auth'
+
+// 权限判断
+const canAdd = auth.hasPermi(['pv:station:add'])
+const canEdit = auth.hasPermi(['pv:station:edit'])
+const canRemove = auth.hasPermi(['pv:station:remove'])
+```
+
+### 响应式设计
+
+- 兼容 Element Plus 响应式栅栏系统
+- 移动端友好的表格设计
+- 智能列宽自适应
+
+### 数据加载
+
+所有列表页面均支持：
+- ✅ 分页加载
+- ✅ 搜索过滤
+- ✅ 排序
+- ✅ 加载状态指示
+
+### 表单验证
+
+所有新增/编辑表单使用 Element Plus Form 的规则验证：
+
+```javascript
+const rules = {
+  stationName: [
+    { required: true, message: '电站名称不能为空', trigger: 'blur' }
+  ]
+}
+```
+
+---
+
+## 📊 数据模型
+
+### 电站 (Station)
+```typescript
+{
+  stationId: number,
+  stationName: string,        // 必填
+  location: string,           // 地理位置
+  tagId: number,             // 关联电站标签
+  capacityMw: number,        // 装机容量(MW)
+  createTime: string,        // 创建时间
+  updateTime?: string
+}
+```
+
+### 接入设备 (Gateway)
+```typescript
+{
+  gatewayId: string,
+  name: string,
+  type: 'DTU' | 'EdgeGateway' | 'SmartDongle',
+  stationId: string,         // 所属电站
+  serialNumber: string,      // SN码
+  communicationType: 'MQTT' | 'Polling',
+  config: {
+    brokerUrl?: string,      // MQTT broker
+    topic?: string,
+    pollingInterval?: number, // 轮询间隔(秒)
+    protocol: 'ModbusTCP' | 'ModbusRTU' | 'IEC60870'
+  },
+  status: 'online' | 'offline' | 'fault',
+  lastSeen: string
+}
+```
+
+### 逆变器 (Inverter)
+```typescript
+{
+  inverterId: string,
+  inverterNumber: string,
+  serialNumber: string,      // 必填
+  model: string,            // 品牌型号，关联 Model
+  gatewayId: string,        // 所属网关
+  status: 'online' | 'offline' | 'fault',
+  currentPower?: number,    // 当前功率(kW)
+  lastSeen: string
+}
+```
+
+### 告警 (Alert)
+```typescript
+{
+  alertId: string,
+  content: string,
+  level: 'critical' | 'warning' | 'info',
+  source: string,           // 告警来源
+  status: 'active' | 'resolved',
+  occurTime: string,
+  resolvedTime?: string,
+  resolvedBy?: string
+}
+```
+
+### 发电量统计行 (HourlyYieldRow)
+```typescript
+{
+  stationId: string,
+  stationName: string,
+  group: string,            // 分组标签名
+  h0: number,              // 0点发电量(kWh)
+  h1: number,              // 1点发电量
+  ...
+  h23: number,             // 23点发电量
+  total: number            // 日总发电量
+}
+```
+
+---
+
+## 🛠️ 开发指南
+
+### 添加新的数据管理模块
+
+以 `stationTag`（电站标签）为例：
+
+1. **创建 API 模块** (`src/api/pv/catalog.js`):
+```javascript
+export function listStationTag(params) {
+  return request({
+    url: '/pv/stationTag/list',
+    method: 'get',
+    params
+  })
+}
+```
+
+2. **创建 Vue 页面** (`src/views/pv/stationTag/index.vue`):
+```vue
+<template>
+  <div class="app-container">
+    <!-- 搜索工具栏 -->
+    <!-- 数据表格 -->
+    <!-- 新增/编辑对话框 -->
+  </div>
+</template>
+
+<script setup>
+import { listStationTag, addStationTag, updateStationTag, delStationTag } from '@/api/pv/catalog'
+// 组件逻辑
+</script>
+```
+
+3. **样式** — 所有通用样式在 `src/assets/styles/pv.scss` 中定义，组件可直接使用预定义的 CSS 类：
+   - `.pv-toolbar` — 顶部工具栏
+   - `.pv-table-card` — 表格卡片容器
+   - `.pv-metric-card` — 统计卡片
+   - 等等
+
+### 修改样式主题
+
+所有 PV 模块样式集中在 `src/assets/styles/pv.scss`，支持：
+- 浅色/深色主题 (CSS 变量)
+- 响应式栅栏
+- 统一的间距和排版
+
+---
+
+## 🧪 测试与构建
+
+### 开发阶段
+```bash
+npm run dev          # 启动开发服务器（HMR 热更新）
+```
+
+### 生产构建
+```bash
+npm run build:prod   # 生产环境构建
+npm run build:stage  # 预发布构建
+npm run preview      # 预览构建结果
+```
+
+### 构建输出
+```
+dist/
+├── index.html       # 入口 HTML
+├── assets/          # 静态资源（JS/CSS/字体）
+└── ...
+```
+
+---
+
+## 📱 浏览器兼容性
+
+- ✅ Chrome / Edge (最新版)
+- ✅ Firefox (最新版)
+- ✅ Safari (13+)
+- ⚠️ IE11 (不支持)
+
+---
+
+## 🔐 安全性
+
+### 前端权限控制
+
+所有操作按钮通过 `auth.hasPermi()` 进行权限检查，无权限用户无法看到按钮。
+
+**⚠️ 重要**: 后端 API **必须** 也进行权限验证，不要依赖前端控制。
+
+### API 认证
+
+所有请求会自动带上 JWT Token（`Authorization: Bearer <token>`），由 `src/utils/request.js` 拦截器处理。
+
+---
+
+## 📚 相关文档
+
+- [若依框架文档](https://doc.ruoyi.vip/ruoyi-vue/)
+- [Element Plus 官方文档](https://element-plus.org/)
+- [Vue 3 官方文档](https://vuejs.org/)
+- [ECharts 文档](https://echarts.apache.org/)
+
+---
+
+## 📝 提交规范
+
+遵循 RuoYi 约定的 Commit 规范：
+
+```
+feat: 新增功能
+fix: 修复 bug
+refactor: 代码重构
+style: 样式调整
+docs: 文档更新
+chore: 构建工具/依赖更新
+```
+
+例子：
+```
+git commit -m "feat(pv): 新增监控大屏告警图表展示"
+```
+
+---
+
+## 🎯 下一步优化方向
+
+### 短期 (1-2 周)
+- [ ] 完整的后端 API 实现 (Java/Spring Boot)
+- [ ] 单元测试覆盖核心业务
+- [ ] 错误边界 & 异常处理完善
+- [ ] 国际化 (i18n) 支持
+
+### 中期 (1-2 月)
+- [ ] 实时数据推送 (WebSocket)
+- [ ] 大屏展示模式 (全屏仪表盘)
+- [ ] 告警推送 (短信/邮件)
+- [ ] 数据导入 (Excel 批量导入)
+- [ ] 权限细粒度控制
+
+### 长期 (2-3 月+)
+- [ ] 移动端 APP (基于 uni-app)
+- [ ] 多租户支持
+- [ ] 大数据分析 (时间序列图表优化)
+- [ ] 智能预警 (基于 ML 模型)
+
+---
+
+## 📞 支持
+
+遇到问题？
+
+1. 检查 `/src/views/pv/` 中的类似模块实现
+2. 查看 Element Plus / Vue 3 官方文档
+3. 查看浏览器控制台 Network / Console 标签
+4. 提交 Issue 或联系开发团队
+
+---
+
+**Last Updated**: 2024-12
+**License**: MIT
+
