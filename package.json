@@ -49,5 +49,9 @@
   },
   "resolutions": {
     "quill": "2.0.2"
+  },
+  "engines": {
+    "node": "^20.0.0",
+    "npm": "^10.0.0"
   }
 }
